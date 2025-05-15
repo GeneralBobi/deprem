@@ -32,6 +32,9 @@ def get_city_counts(dataframe):
 app = Dash(__name__)
 app.title = "Türkiye Deprem Verileri"
 
+# **Bunu ekle: Gunicorn vs için WSGI callable**
+server = app.server
+
 # Arayüz
 app.layout = html.Div([
     html.H1("Deprem Şehir İstatistikleri", style={'textAlign': 'center'}),
@@ -50,14 +53,12 @@ app.layout = html.Div([
     dcc.Graph(id='city-bar-chart')
 ], style={'width': '80%', 'margin': 'auto'})
 
-
 # Callback fonksiyonu
 @app.callback(
     Output('city-bar-chart', 'figure'),
     Input('magnitude-slider', 'value')
 )
 def update_chart(slider_value):
-    # Slider değeri ile filtreleme işlemi
     filtered_df = df[df['Magnitude'] >= slider_value]
     city_counts = get_city_counts(filtered_df)
 
@@ -73,7 +74,6 @@ def update_chart(slider_value):
     fig.update_layout(xaxis_tickangle=-45)
     return fig
 
-
-# Uygulamayı başlat
+# Lokal geliştirme için
 if __name__ == '__main__':
     app.run_server(debug=True)

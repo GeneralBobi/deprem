@@ -4,7 +4,7 @@ from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 
 # CSV dosyasının doğru yolu
-file_path = "C:/Users/Boran Birtanır/Desktop/Earthquake_4.csv"
+file_path = "Earthquake_4.csv"
 df = pd.read_csv(file_path)
 
 # Sütunları temizle
